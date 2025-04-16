@@ -1,0 +1,11 @@
+[package]
+name = "publisher"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dust_dds = { workspace = true }
+video_pubsub = { path = ".." }
+ffmpeg-next = { workspace = true }
+image = { workspace = true }
+clap = { workspace = true }

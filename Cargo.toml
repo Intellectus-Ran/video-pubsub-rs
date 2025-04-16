@@ -1,0 +1,19 @@
+[package]
+name = "video_pubsub"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dust_dds = { git = "https://github.com/s2e-systems/dust-dds.git", branch = "main" }
+
+[workspace.dependencies]
+dust_dds = { git = "https://github.com/s2e-systems/dust-dds.git", branch = "main" }
+ffmpeg-next = "7.1.0"
+image = "0.25.6"
+clap = { version = "4.5.36", features = ["derive"] }
+
+[workspace]
+members = [
+    "publisher",
+    "subscriber",
+]
