@@ -12,6 +12,7 @@ use dust_dds::{
 use ffmpeg_next::{format::input, frame::Video as VideoFrame, software::scaling::{context::Context, flag::Flags}};
 use video_pubsub::models::{FrameData, VideoMetadata, DOMAIN_ID};
 use clap::{arg, Parser};
+use std::f64;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about)]
@@ -74,7 +75,8 @@ fn main() {
     let mut frame_index = 0;
 
     // 프레임레이트 계산
-    let fps = input.avg_frame_rate().into();
+    let mut fps: f64 = input.avg_frame_rate().into();
+    fps = (fps * 100.0).round() / 100.0;  // 소수점 둘째자리까지 반올림
     let width = decoder.width();
     let height = decoder.height();
 
@@ -116,7 +118,7 @@ fn main() {
 
     // Dust DDS에서 잠시 대기하지 않으면 구독자가 매칭되지 않는 경우가 종종 발생
     // Waitset이 완벽한 Match 완료 상태를 보장해주지 않는것으로 보임
-    std::thread::sleep(std::time::Duration::from_millis(100));
+    std::thread::sleep(std::time::Duration::from_millis(1000));
     println!("Matched with metadata subscriber");
 
     // 비디오 메타데이터 전송
